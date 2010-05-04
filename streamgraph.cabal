@@ -1,0 +1,22 @@
+Name:                streamgraph
+Version:             0.0
+
+Description:
+  
+  Library for creating stream graphs.  The supported output format is
+  currently svg.  See this research for more information:
+  http://www.leebyron.com/else/streamgraph/
+
+License:             BSD3
+Author:              Jason Dagit
+Maintainer:          dagitj@gmail.com
+Build-Type:          Simple
+Cabal-Version:       >=1.6
+Category:            Graphics
+
+library
+  Hs-Source-Dirs:    src
+  Exposed-Modules:   Graphics.StreamGraph
+  Build-Depends:     base >= 3 && < 5,
+                     wumpus-core == 0.13.*
+  ghc-options:       -Wall -fno-warn-unused-binds
