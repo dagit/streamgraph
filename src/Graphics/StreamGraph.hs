@@ -1,10 +1,9 @@
 module Graphics.StreamGraph where
 
-import Wumpus.Core.Picture ( vertexPath, zcstroke, frame, zfill,
-                             zostroke, frameMulti, fill )
+import Wumpus.Core.Picture ( vertexPath, frame, zfill,
+                             frameMulti, fill )
 import Wumpus.Core.Geometry ( Point2(P2) )
 import Wumpus.Core ( Path, Primitive, Picture )
-import Wumpus.Core.OutputSVG ( writeSVG_latin1 )
 import Wumpus.Core.Colour ( red, green, blue )
 
 {- it looks like wumpus uses the postcript coordinate system:
@@ -56,7 +55,7 @@ between xs x = error $ "x = " ++ show x ++ ", not found between any elements: " 
 -- Example Height functions
 testSeries1 :: Double -> Double
 testSeries1 = lerpFromPoints points
-  where points = [(0, 10), (10, 10), (20, 15), (30, 5)] ++ [(x,5*sin (x^2) + 10) | x <- [35, 40 .. 1000] ]
+  where points = [(0, 10), (10, 10), (20, 15), (30, 5)] ++ [(x,5*sin (x**2) + 10) | x <- [35, 40 .. 1000] ]
 
 testSeries2 :: Double -> Double
 testSeries2 = lerpFromPoints points
@@ -71,11 +70,11 @@ fs = [ testSeries1, testSeries2, testSeries3 ]
 
 g0 :: Double -> Double
 g0 x = - 0.5 * sum (fis x)
-  where fis x = zipWith ($) fs (repeat x)
+  where fis y = zipWith ($) fs (repeat y)
 
 gi :: Int -> Double -> Double
 gi i x = g0 x + sum (fis x)
-  where fis x = take i $ zipWith ($) fs (repeat x)
+  where fis y = take i $ zipWith ($) fs (repeat y)
 
 -- | Add two functions at a point
 (.+) :: Num a => (a -> a) -> (a -> a) -> (a -> a)
@@ -102,4 +101,5 @@ band3 = vertexPath ps
   ps = [P2 x ((gs !! 2) x) | x <- [1,5 .. 800] ] ++
        reverse [P2 x ((gs !! 3) x) | x <- [1,5 .. 800] ]
 
+f1 :: Picture Double
 f1 = frameMulti $ [fill red band1, fill green band2, fill blue band3]
