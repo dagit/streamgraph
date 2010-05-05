@@ -56,15 +56,15 @@ between xs x = error $ "x = " ++ show x ++ ", not found between any elements: " 
 -- Example Height functions
 testSeries1 :: Double -> Double
 testSeries1 = lerpFromPoints points
-  where points = [(0, 10), (10, 10), (20, 15), (30, 5)] ++ [ (x,100) | x <- [35, 40 .. 1000] ]
+  where points = [(0, 10), (10, 10), (20, 15), (30, 5)] ++ [(x,5*sin (x^2) + 10) | x <- [35, 40 .. 1000] ]
 
 testSeries2 :: Double -> Double
 testSeries2 = lerpFromPoints points
-  where points = [ (x,(x*0.0001)^2) | x <- [0,5..1000] ]
+  where points = [ (x,5*abs(sin x/cos x) + 30) | x <- [0,5..1000] ]
 
 testSeries3 :: Double -> Double
 testSeries3 = lerpFromPoints points
-  where points = [ (x, ((0.001*x)-1)^3+3) | x <- [0,5..1000] ]
+  where points = [ (x, x/2 - x/3 + x/4 - x/5) | x <- [1,5..1000] ]
 
 fs :: [Double -> Double]
 fs = [ testSeries1, testSeries2, testSeries3 ]
@@ -102,4 +102,4 @@ band3 = vertexPath ps
   ps = [P2 x ((gs !! 2) x) | x <- [1,5 .. 800] ] ++
        reverse [P2 x ((gs !! 3) x) | x <- [1,5 .. 800] ]
 
-f1 = frameMulti $ [fill blue band1, fill red band2, fill green band3]
+f1 = frameMulti $ [fill red band1, fill green band2, fill blue band3]
