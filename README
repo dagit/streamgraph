@@ -1,0 +1,45 @@
+= Overview =
+
+Create nice stream graphs from a set of data points.
+
+The current implementation is a bit hackish and meant to try out some
+of the ideas so a real implementation can be constructed.
+
+You can read about stream graphs here:
+  http://www.leebyron.com/else/streamgraph/
+
+= TODO =
+
+* Fix the bugs!
+
+* Make the example executable in the cabal file depend on the library
+  in the cabal file.
+
+* Implement nicer color sets.  The current example uses the predefined
+  names in the wumpus library, but those are more for debugging and
+  look painful together.  How do people implement color palette
+  pickers?  This can't be too difficult.  How does
+  http://colorlovers.com do it?
+
+* Import the data points from outside and create time series from
+  them.
+
+* Generalize the current band* functions.  This is probably as simple
+  as doing a zipWith on the time series and the tail of the time
+  series.
+
+= Known Bugs =
+
+* The function band1 seems to have a bug with how you specify points.
+  It's currently very easy to specify points beyond the end of the
+  defined set.  That's why the upper bound inside of band1 is
+  currently 800 instead of 1000.
+
+* No tests yet.
+
+* Between is partial, but it should have type:
+  between :: [(Double, Double)] -> Double -> Maybe ((Double,Double), (Double, Double))
+
+* lerpFromPoints should be modified to do something intelligent when a
+  point is requested outside of the specified domain.  Perhaps return
+  Nothing?
